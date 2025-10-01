@@ -1,5 +1,5 @@
 // ĐỊA CHỈ WORKER CỦA BẠN ĐÃ ĐƯỢC ĐẶT Ở ĐÂY
-const WORKER_URL = "https://go.dafa.workers.dev"; 
+const WORKER_URL = "https://go.falun.workers.dev"; 
 
 document.addEventListener('DOMContentLoaded', () => {
     // Lấy các phần tử HTML
@@ -57,4 +57,5 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
 });
+
 
