@@ -7,23 +7,36 @@ document.addEventListener('DOMContentLoaded', () => {
     const resultDiv = document.getElementById('resultLinks');
 
     goButton.addEventListener('click', () => {
-        const blockedUrl = urlInput.value.trim();
+        let blockedUrl = urlInput.value.trim();
 
         if (blockedUrl === '') {
             alert('Vui lòng dán link cần mở khóa.');
             return;
         }
+        
+        // --- LOGIC MỚI: ĐƠN GIẢN HÓA URL (FIX VẤN ĐỀ CỦA BẠN) ---
+        // 1. Xóa https:// hoặc http://
+        blockedUrl = blockedUrl.replace(/^https?:\/\//i, '');
+        
+        // 2. Thêm lại https:// nếu không có, và thêm / nếu không có path nào.
+        let validUrl = blockedUrl;
+        if (!validUrl.startsWith('http')) {
+            validUrl = 'https://' + validUrl;
+        }
+        
+        // Đảm bảo URL kết thúc bằng / nếu đó chỉ là tên miền (ví dụ: https://vn.minghui.org)
+        if (validUrl.match(/^(https?:\/\/[^\/]+)$/i)) {
+             validUrl += '/';
+        }
+        // --- KẾT THÚC LOGIC MỚI ---
 
-        const validUrl = blockedUrl.startsWith('http') ? blockedUrl : 'https://' + blockedUrl;
-
-        // --- ĐÂY LÀ DÒNG CODE QUAN TRỌNG TẠO THAM SỐ ?url= ---
         const directProxyLink = `${WORKER_URL}/?url=${encodeURIComponent(validUrl)}`;
 
-        // --- 2. HIỂN THỊ KẾT QUẢ VÀ NÚT ---
+        // --- HIỂN THỊ KẾT QUẢ VÀ NÚT ---
         resultDiv.innerHTML = `
             <div class="col-md-10 alert alert-light shadow-sm">
                 <h5 class="text-success">✅ Đã Tạo Liên Kết Proxy</h5>
-
+                
                 <p class="text-start"><strong>Bước 1:</strong> Xem trang bị chặn trực tiếp:</p>
                 <a href="${directProxyLink}" target="_blank" class="btn btn-primary btn-sm mb-3">Mở Trang Ngay</a>
 
