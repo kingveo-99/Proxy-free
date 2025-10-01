@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const validUrl = blockedUrl.startsWith('http') ? blockedUrl : 'https://' + blockedUrl;
 
-        // --- 1. TẠO LIÊN KẾT PROXY TRỰC TIẾP ---
+        // --- ĐÂY LÀ DÒNG CODE QUAN TRỌNG TẠO THAM SỐ ?url= ---
         const directProxyLink = `${WORKER_URL}/?url=${encodeURIComponent(validUrl)}`;
 
         // --- 2. HIỂN THỊ KẾT QUẢ VÀ NÚT ---
