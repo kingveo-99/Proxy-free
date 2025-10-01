@@ -3,13 +3,16 @@ const WORKER_URL = "https://proxy-free.kinglightveo3.workers.dev";
 
 document.addEventListener('DOMContentLoaded', () => {
     // Lấy các phần tử HTML
-    const urlInput = document.getElementById('blockedUrl');
-    const goButton = document.getElementById('goButton');
-    const quickLinks = document.querySelectorAll('.quick-link'); // Các nút truy cập nhanh (thẻ <a>)
+    const urlInput = document.getElementById('blockedUrl'); // Ô nhập liệu
+    const goButton = document.getElementById('goButton');   // Nút chính "Mở Khóa"
+    const quickLinks = document.querySelectorAll('.quick-link'); // Các nút truy cập nhanh
 
+    
     // --- 1. LOGIC CHO NÚT CHÍNH "MỞ KHÓA!" (CHUYỂN HƯỚNG TAB HIỆN TẠI) ---
-    // Hành động này diễn ra khi người dùng nhập URL vào ô và bấm nút.
-    goButton.addEventListener('click', () => {
+    // Hành động này diễn ra khi người dùng bấm nút chính
+    goButton.addEventListener('click', handleGoButtonClick);
+
+    function handleGoButtonClick() {
         let blockedUrl = urlInput.value.trim();
 
         if (blockedUrl === '') {
@@ -17,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         
-        // Chuẩn hóa và Fix URL (Đảm bảo có https:// và dấu / ở cuối nếu là trang chủ)
+        // Chuẩn hóa và Fix URL
         blockedUrl = blockedUrl.replace(/^https?:\/\//i, '');
         let validUrl = blockedUrl;
         if (!validUrl.startsWith('http')) {
@@ -29,31 +32,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const directProxyLink = `${WORKER_URL}/?url=${encodeURIComponent(validUrl)}`;
 
-        // HÀNH ĐỘNG: CHUYỂN HƯỚNG TAB HIỆN TẠI (Không bị chặn)
+        // HÀNH ĐỘNG: CHUYỂN HƯỚNG TAB HIỆN TẠI
         window.location.href = directProxyLink;
         
         // Xóa nội dung ô nhập
         urlInput.value = '';
-    });
+    }
 
     
-    // --- 2. LOGIC CHO 3 LIÊN KẾT TRUY CẬP NHANH (MỞ TAB MỚI) ---
-    // Hành động này diễn ra khi trang tải xong: gán link Proxy vào thuộc tính href của thẻ <a>.
+    // --- 2. LOGIC CHO 3 NÚT CỨNG TRUY CẬP NHANH (MÔ PHỎNG NÚT CHÍNH) ---
+    // Gán Event Listener cho 3 nút truy cập nhanh
     quickLinks.forEach(link => {
-        // Lấy URL từ thuộc tính data-url trong HTML
-        const blockedUrl = link.getAttribute('data-url');
+        link.addEventListener('click', (event) => {
+            // Ngăn chặn hành vi mặc định của thẻ <a> (ngăn chặn mở tab mới lỗi)
+            event.preventDefault(); 
+            
+            // Lấy URL từ thuộc tính data-url
+            const targetUrl = link.getAttribute('data-url');
+            
+            // 1. Đặt URL vào ô nhập liệu chính
+            urlInput.value = targetUrl;
+            
+            // 2. Kích hoạt logic của nút "Mở Khóa"
+            handleGoButtonClick();
+        });
         
-        // Chuẩn hóa URL cho Proxy (Chỉ cần thêm HTTPS prefix)
-        let validUrl = blockedUrl;
-        if (!validUrl.startsWith('http')) {
-            validUrl = 'https://' + validUrl;
-        }
-        
-        const directProxyLink = `${WORKER_URL}/?url=${encodeURIComponent(validUrl)}`;
-        
-        // Gán link Proxy đã tạo vào thuộc tính href của thẻ <a>
-        // Khi người dùng click, thẻ <a> với target="_blank" sẽ tự mở tab mới
-        link.setAttribute('href', directProxyLink);
+        // Cần đảm bảo thuộc tính href trống (hoặc là #) để logic ngăn chặn hoạt động tốt
+        link.setAttribute('href', '#');
     });
     
 });
