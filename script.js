@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const goButton = document.getElementById('goButton');
     // LOẠI BỎ resultDiv vì không cần hiển thị kết quả
     
+    // --- 1. LOGIC CHO NÚT CHÍNH "MỞ KHÓA!" (CHUYỂN HƯỚNG TAB HIỆN TẠI) ---
     goButton.addEventListener('click', () => {
         let blockedUrl = urlInput.value.trim();
 
@@ -29,13 +30,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const directProxyLink = `${WORKER_URL}/?url=${encodeURIComponent(validUrl)}`;
 
-        // --- HÀNH ĐỘNG MỚI: CHUYỂN HƯỚNG TAB HIỆN TẠI (1 nút, 1 thao tác) ---
-        // Thao tác này là chắc chắn nhất và không bao giờ bị chặn.
+        // HÀNH ĐỘNG: CHUYỂN HƯỚNG TAB HIỆN TẠI
         window.location.href = directProxyLink;
         
         // Xóa nội dung ô nhập
         urlInput.value = '';
     });
-});
 
+    
+    // --- 2. LOGIC CHO 3 NÚT CỨNG TRUY CẬP NHANH (MỞ TAB MỚI) ---
+    const quickButtons = document.querySelectorAll('.quick-button');
+
+    quickButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Lấy URL từ thuộc tính data-url trong HTML
+            const blockedUrl = button.getAttribute('data-url');
+            
+            // Xử lý URL (Chỉ cần thêm HTTPS prefix)
+            let validUrl = blockedUrl;
+            if (!validUrl.startsWith('http')) {
+                validUrl = 'https://' + validUrl;
+            }
+            
+            const directProxyLink = `${WORKER_URL}/?url=${encodeURIComponent(validUrl)}`;
+            
+            // HÀNH ĐỘNG: MỞ TAB MỚI NGAY LẬP TỨC
+            // Vì đây là hành động click trực tiếp, nó sẽ không bị chặn pop-up
+            window.open(directProxyLink, '_blank');
+        });
+    });
+    
+}); 
 // Xóa hoàn toàn hàm copyLink() và các phần tử liên quan.
