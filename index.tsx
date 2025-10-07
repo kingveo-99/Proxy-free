@@ -1,5 +1,5 @@
 // ĐỊA CHỈ WORKER CỦA BẠN ĐÃ ĐƯỢỢC ĐẶT Ở ĐÂY
-const WORKER_URL = "https://go.falun.workers.dev/"; // QUAN TRỌNG: Hãy thay thế bằng địa chỉ worker đang hoạt động của bạn!
+const WORKER_URL = "https://web.daiphap.to/"; // QUAN TRỌNG: Đã thay thế bằng địa chỉ web.daiphap.to!
 
 /**
  * Generates a proxy link for the given URL and opens it in a new tab.
@@ -12,7 +12,9 @@ const openProxyForUrl = (url) => {
         ? url 
         : 'https://' + url;
     
-    const generatedProxyLink = `${WORKER_URL}?url=${encodeURIComponent(validUrl)}`;
+    // Đảm bảo WORKER_URL kết thúc bằng dấu / để tạo đường dẫn hợp lệ
+    const workerBase = WORKER_URL.endsWith('/') ? WORKER_URL : WORKER_URL + '/';
+    const generatedProxyLink = `${workerBase}?url=${encodeURIComponent(validUrl)}`;
     
     window.open(generatedProxyLink, '_blank');
 };
