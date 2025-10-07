@@ -1,0 +1,324 @@
+html, body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: white;
+}
+
+.card {
+    border: 2px solid #dee2e6;
+    border-radius: 1rem;
+    transition: all 0.3s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,.15)!important;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, .25);
+    border-color: #86b7fe;
+}
+
+/* Tăng độ dày đường viền cho ô nhập liệu và nút bấm */
+.input-group .form-control,
+.input-group .btn {
+    border-width: 2px;
+}
+
+/* Làm nhạt màu viền và thêm nền cho nút "Dán" để hài hòa hơn */
+#pasteButton {
+    border-color: #dee2e6;
+    background-color: #e9ecef; /* Thêm nền xám nhạt */
+}
+
+/* Đảm bảo hiệu ứng hover của nút Dán vẫn hoạt động nhất quán */
+#pasteButton:hover {
+    color: #fff;
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.quick-access-logo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 1px solid #ffffff; /* White stroke */
+    object-fit: cover; /* Ensures image fills the circle without distortion */
+    margin-bottom: 0.5rem;
+}
+
+.domain-pill {
+    background-color: #f8f9fa; /* Bootstrap's bg-light */
+    display: inline-block;
+    border-radius: 50rem; /* pill shape */
+    padding: 0.25rem 0.75rem;
+    font-size: 0.875em;
+    margin-bottom: 1rem;
+}
+
+.site-footer {
+    color: white;
+}
+
+.site-footer a {
+    text-decoration: none;
+}
+
+.site-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Prevent multiple clicks on quick access items during processing */
+.quick-access-btn.processing {
+    pointer-events: none;
+    cursor: wait;
+    opacity: 0.7;
+}
+
+/* --- New Quick Access Panel Styles --- */
+.quick-access-panel {
+    width: 420px;
+    max-width: 95vw;
+    border-radius: 1rem !important;
+    overflow: hidden; /* Ensures child elements conform to border-radius */
+}
+
+.quick-access-panel-body {
+    max-height: 65vh;
+    overflow-y: auto;
+}
+
+/* Custom Scrollbar */
+.quick-access-panel-body::-webkit-scrollbar,
+.news-panel-body::-webkit-scrollbar {
+    width: 8px;
+}
+.quick-access-panel-body::-webkit-scrollbar-track,
+.news-panel-body::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+.quick-access-panel-body::-webkit-scrollbar-thumb,
+.news-panel-body::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+}
+.quick-access-panel-body::-webkit-scrollbar-thumb:hover,
+.news-panel-body::-webkit-scrollbar-thumb:hover {
+    background: #aaa;
+}
+
+.quick-access-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    background-color: #f8f9fa; /* bg-light */
+    border: 1px solid #dee2e6;
+    border-radius: 0.75rem;
+    text-decoration: none;
+    color: inherit;
+    transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.quick-access-item:hover {
+    background-color: #e9ecef; /* A bit darker */
+    transform: translateY(-2px);
+    box-shadow: 0 0.25rem 0.5rem rgba(0,0,0,.075);
+}
+
+.quick-access-item:last-child {
+    margin-bottom: 0;
+}
+
+.quick-access-item .title {
+    color: #212529; /* Default text color */
+}
+
+.badge-proxy, .badge-direct {
+    padding: 0.35em 0.65em;
+    font-size: .75em;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 50rem; /* pill */
+    flex-shrink: 0; /* Prevent badge from shrinking */
+    margin-left: 1rem;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+}
+
+.badge-proxy {
+    background: linear-gradient(45deg, #0d6efd, #0a58ca);
+    box-shadow: 0 0 8px rgba(13, 110, 253, 0.5);
+}
+
+.badge-direct {
+    background: linear-gradient(45deg, #fd7e14, #d35400);
+    box-shadow: 0 0 8px rgba(253, 126, 20, 0.6);
+}
+
+/* --- News Panel Styles --- */
+.news-panel {
+    width: 420px;
+    max-width: 95vw;
+    border-radius: 1rem !important;
+    overflow: hidden;
+}
+
+.news-panel-body {
+    max-height: 65vh;
+    overflow-y: auto;
+}
+
+.news-item {
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 0.75rem;
+    transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.news-item:hover {
+    background-color: #e9ecef;
+    transform: translateY(-2px);
+    box-shadow: 0 0.25rem 0.5rem rgba(0,0,0,.075);
+}
+
+.news-item:last-child {
+    margin-bottom: 0;
+}
+
+/* News Badge Styles */
+.badge-new, .badge-important, .badge-hot {
+    padding: 0.35em 0.65em;
+    font-size: .70em;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 50rem;
+    text-transform: uppercase;
+    margin-left: 0.25rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.badge-new {
+    color: #fff;
+    background-color: #dc3545;
+    box-shadow: 0 0 8px rgba(220, 53, 69, 0.5);
+}
+
+
+/* --- Badge Animations --- */
+@keyframes gradient-sweep {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+@keyframes pulse-hot-text {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.badge-important {
+    color: #fff;
+    background: #6f42c1;
+}
+
+.badge-important::before,
+.badge-new::before,
+.badge-proxy::before,
+.badge-direct::before,
+.badge-hot::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, rgba(255,255,255,0) 20%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 80%);
+    animation: gradient-sweep 3s infinite linear;
+}
+
+
+.badge-hot {
+    color: #fff;
+    background: linear-gradient(45deg, #fd7e14, #dc3545);
+    box-shadow: 0 0 8px rgba(253, 126, 20, 0.6);
+}
+
+.badge-hot-text {
+    display: inline-block; /* Important for transform to work */
+    animation: pulse-hot-text 1.5s infinite ease-in-out;
+}
+
+/* --- New Styles for News Count Badge --- */
+.badge-news-count {
+    padding: 0.35em 0.65em;
+    font-size: .75em;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 50rem;
+    color: #fff;
+    position: relative;
+    background-color: #dc3545; /* Replaced gradient with solid color */
+    box-shadow: 0 0 8px rgba(220, 53, 69, 0.6);
+    top: -2px; /* Adjusted position */
+}
+
+.badge-news-count-text {
+    display: inline-block;
+    animation: pulse-hot-text 1.5s infinite ease-in-out;
+}
+
+/* --- Custom Card and Button Adjustments --- */
+/* Increase corner radius for access buttons inside cards */
+.card .quick-access-btn {
+    border-radius: 50rem; /* More rounded corners as requested */
+}
+
+/* --- Custom Button Gradient --- */
+.btn-primary {
+    background: linear-gradient(45deg, #0a58ca, #0d6efd);
+    border: none;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-primary:hover {
+    box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+    transform: translateY(-2px);
+    filter: brightness(1.1); /* Make it slightly brighter on hover */
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(13, 110, 253, 0.2);
+}
+
+.btn-primary:disabled,
+.btn-primary.disabled {
+    background: linear-gradient(45deg, #0d6efd, #0a58ca); /* Keep gradient but add opacity */
+    opacity: 0.65;
+    box-shadow: none;
+    transform: none;
+    cursor: wait;
+    animation: none; /* Disable animation when disabled */
+}
