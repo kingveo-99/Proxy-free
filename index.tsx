@@ -1,18 +1,25 @@
+
 // ĐỊA CHỈ WORKER CỦA BẠN ĐÃ ĐƯỢỢC ĐẶT Ở ĐÂY
 const WORKER_URL = "https://web.daiphap.to/"; // QUAN TRỌNG: Hãy thay thế bằng địa chỉ worker đang hoạt động của bạn!
 
 /**
  * Generates a proxy link for the given URL and opens it in a new tab.
+ * The URL is formatted to be path-based for better readability.
+ * e.g., https://web.daiphap.to/example.com/page
  * @param {string} url The URL to proxy.
  */
 const openProxyForUrl = (url) => {
     if (!url) return;
 
+    // Ensure the URL has a protocol for correct parsing.
     const validUrl = url.startsWith('http://') || url.startsWith('https') 
         ? url 
         : 'https://' + url;
     
-    const generatedProxyLink = `${WORKER_URL}?url=${encodeURIComponent(validUrl)}`;
+    // Create a path-based proxy URL by removing the protocol from the target URL.
+    // This assumes the worker at WORKER_URL is configured to handle path-based requests.
+    const urlWithoutProtocol = validUrl.replace(/^https?:\/\//, '');
+    const generatedProxyLink = `${WORKER_URL}${urlWithoutProtocol}`;
     
     window.open(generatedProxyLink, '_blank');
 };
@@ -131,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-    // Event listeners for quick access buttons
+    // --- Quick Access Logic ---
     const quickAccessButtons = document.querySelectorAll('.quick-access-btn') as NodeListOf<HTMLElement>;
 
     quickAccessButtons.forEach(element => {
